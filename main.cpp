@@ -4,7 +4,21 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QProgressBar>
+#include <QMediaPlayer>
+#include <QAction>
+#include <QObject>
 
+QMediaPlayer musicPlayer;
+
+class BtnFunc{
+public:
+    void playMusic(){
+        musicPlayer.play();
+    }
+};
+
+
+//TODO: Fix bugs
 
 int main(int argc, char **argv)
 {
@@ -19,6 +33,8 @@ int main(int argc, char **argv)
     centralWidget.setLayout(&layout);
     mainWindow.setCentralWidget(&centralWidget);
 
+    connect(playButton, &QPushButton::clicked, this, &BtnFunc.playMusic)
+
     playButton.setText("Play");
 
 
@@ -28,3 +44,6 @@ int main(int argc, char **argv)
     mainWindow.show();
     return app.exec();
 }
+
+
+
