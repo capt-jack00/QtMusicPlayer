@@ -10,15 +10,7 @@
 
 QMediaPlayer musicPlayer;
 
-class BtnFunc{
-public:
-    void playMusic(){
-        musicPlayer.play();
-    }
-};
-
-
-//TODO: Fix bugs
+//TODO: GUI Layout needs refractoring and redesign
 
 int main(int argc, char **argv)
 {
@@ -28,18 +20,35 @@ int main(int argc, char **argv)
     QWidget centralWidget;
     QGridLayout layout;
     QPushButton playButton;
+    QPushButton selectButton;
+    QPushButton stopButton;
     QProgressBar musicStatus;
 
     centralWidget.setLayout(&layout);
     mainWindow.setCentralWidget(&centralWidget);
 
-    connect(playButton, &QPushButton::clicked, this, &BtnFunc.playMusic)
-
     playButton.setText("Play");
+    stopButton.setText("Stop");
+    selectButton.setText("Select track");
 
+    musicPlayer.setMedia(QUrl::fromLocalFile("/home/kociarz/Downloads/music.mp3"));
 
-    layout.addWidget(&musicStatus, 0, 1);
+    QObject::connect(&playButton, &QPushButton::clicked, &mainWindow, [&](){
+        musicPlayer.play();
+    });
+
+    QObject::connect(&stopButton, &QPushButton::clicked, &mainWindow, [&](){
+        musicPlayer.stop();
+    });
+
+    QObject::connect(&selectButton, &QPushButton::clicked, &mainWindow, [&](){
+
+    });
+
+    layout.addWidget(&musicStatus, 1, 0);
     layout.addWidget(&playButton, 0, 0);
+    layout.addWidget(&stopButton, 0, 1);
+    layout.addWidget(&selectButton, 0, 2);
     mainWindow.resize(500, 800);
     mainWindow.show();
     return app.exec();
