@@ -7,10 +7,11 @@
 #include <QMediaPlayer>
 #include <QAction>
 #include <QObject>
+#include <QVBoxLayout>
 
 QMediaPlayer musicPlayer;
 
-//TODO: GUI Layout needs refractoring and redesign
+//TODO: Do something with spacing in between buttons and progress bar
 
 int main(int argc, char **argv)
 {
@@ -18,13 +19,14 @@ int main(int argc, char **argv)
 
     QMainWindow mainWindow;
     QWidget centralWidget;
-    QGridLayout layout;
+    QVBoxLayout *layout = new QVBoxLayout;
     QPushButton playButton;
     QPushButton selectButton;
     QPushButton stopButton;
     QProgressBar musicStatus;
 
-    centralWidget.setLayout(&layout);
+    layout->setContentsMargins(10, 0, 10, 0);
+    centralWidget.setLayout(layout);
     mainWindow.setCentralWidget(&centralWidget);
 
     playButton.setText("Play");
@@ -45,11 +47,11 @@ int main(int argc, char **argv)
 
     });
 
-    layout.addWidget(&musicStatus, 1, 0);
-    layout.addWidget(&playButton, 0, 0);
-    layout.addWidget(&stopButton, 0, 1);
-    layout.addWidget(&selectButton, 0, 2);
-    mainWindow.resize(500, 800);
+    layout->addWidget(&musicStatus);
+    layout->addWidget(&playButton);
+    layout->addWidget(&stopButton);
+    layout->addWidget(&selectButton);
+    mainWindow.resize(500, 300);
     mainWindow.show();
     return app.exec();
 }
